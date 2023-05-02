@@ -9,10 +9,10 @@
       <div class="info">
         <strong>{{ factory.name }}</strong>
         <small>
-          <span>✨</span>{{ clicker.factoryPrice(factory.id) }}
+          <span>✨</span>{{ clicker.formattedFactoryPrice(factory.id) }}
         </small>
-        <small>
-          - {{ clicker.factoryConfettiPerSecond(factory.id) }}cps
+        <small v-if="factory.owned">
+          - {{ clicker.formattedFactoryConfettiPerSecond(factory.id) }}cps
         </small>
       </div>
       <span class="owned">{{ factory.owned }}</span>
@@ -22,6 +22,8 @@
 
 <script setup>
 import { useClicker } from '../stores/clicker'
+
 defineProps({ factory: { type: Object, required: true } })
+
 const clicker = useClicker()
 </script>
