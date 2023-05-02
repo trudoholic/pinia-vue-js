@@ -7,7 +7,7 @@ input, button, textarea, select {
 }
 
 body {
-  font-family: "Press Start 2P", "Comic Sans MS", script;
+  font-family: "Press Start 2P", "Comic Sans MS", script, monospace;
   color: #ffffff;
   background: #c2e9f6;
   animation: party 10s infinite;

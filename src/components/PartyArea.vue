@@ -2,7 +2,7 @@
   <section class="partyArea">
     <!-- Party content -->
     <h1>Pinia's Party</h1>
-    <h2><!-- TODO:BALANCE --> confetti</h2>
+    <h2>{{ clicker.balance }} confetti</h2>
     <button>
       <div class="inner">✨</div>
     </button>
@@ -14,7 +14,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Confetti from 'js-confetti'
+import { useClicker } from '../stores/clicker'
 
+const clicker = useClicker()
 // Setup confetti canvas
 const canvas = ref(null)
 let confetti = null
