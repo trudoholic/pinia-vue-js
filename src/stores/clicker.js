@@ -5,6 +5,7 @@ export const useClicker = defineStore('clicker', {
   state: () => {
     return {
       balance: 0,
+      tickDurationMs: 250,
       factoryPriceMultiplier: 1.05,
       factories: {
         partyPopper: {
@@ -31,9 +32,30 @@ export const useClicker = defineStore('clicker', {
       // factoryPrice = basePrice * (factoryPriceMultiplier ** owned)
       return state.factories[factoryID].basePrice * (state.factoryPriceMultiplier ** state.factories[factoryID].owned)
     },
+    confettiPerSecond: (state) => {
+      return Object.keys(state.factories).reduce((confettiPerSecond, factoryID) => {
+        return confettiPerSecond + (state.factories[factoryID].confettiPerSecond * state.factories[factoryID].owned)
+      }, 0)
+    },
     factoryConfettiPerSecond: (state) => (factoryID) => {
       // factoryConfettiPerSecond = confettiPerSecond * owned
       return state.factories[factoryID].confettiPerSecond * state.factories[factoryID].owned
     },
+    canBuyFactory(state) {
+      return (factoryID) => state.balance >= this.factoryPrice(factoryID)
+    }
+  },
+  actions: {
+    buyFactory(factoryID) {
+      if (!this.canBuyFactory(factoryID)) {
+        throw new Error('Not enough money')
+      }
+
+      this.balance -= this.factoryPrice(factoryID)
+      this.factories[factoryID].owned++
+    },
+    tick() {
+      this.balance += this.confettiPerSecond * this.tickDurationMs / 1000
+    }
   }
 })
