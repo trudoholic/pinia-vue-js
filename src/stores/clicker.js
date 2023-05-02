@@ -1,0 +1,1 @@
+// empty stores/clicker.js file
