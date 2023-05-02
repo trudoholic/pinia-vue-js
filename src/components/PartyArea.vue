@@ -3,7 +3,7 @@
     <!-- Party content -->
     <h1>Pinia's Party</h1>
     <h2>{{ clicker.balance }} confetti</h2>
-    <button>
+    <button @click="onClick">
       <div class="inner">✨</div>
     </button>
     <!-- Confetti canvas -->
@@ -20,6 +20,7 @@ const clicker = useClicker()
 // Setup confetti canvas
 const canvas = ref(null)
 let confetti = null
+
 const addConfetti = (amount = 1) => {
   confetti?.addConfetti({
     emojis: ['✨'],
@@ -27,9 +28,16 @@ const addConfetti = (amount = 1) => {
     confettiNumber: amount
   })
 }
+
 onMounted(() => {
   confetti = new Confetti({
     canvas: canvas.value
   })
 })
+
+const onClick = () => {
+  clicker.balance++
+  addConfetti()
+}
+
 </script>
