@@ -5,6 +5,7 @@ export const useClicker = defineStore('clicker', {
   state: () => {
     return {
       balance: 0,
+      factoryPriceMultiplier: 1.05,
       factories: {
         partyPopper: {
           id: 'partyPopper',
@@ -24,5 +25,15 @@ export const useClicker = defineStore('clicker', {
         },
       }
     }
+  },
+  getters: {
+    factoryPrice: (state) => (factoryID) => {
+      // factoryPrice = basePrice * (factoryPriceMultiplier ** owned)
+      return state.factories[factoryID].basePrice * (state.factoryPriceMultiplier ** state.factories[factoryID].owned)
+    },
+    factoryConfettiPerSecond: (state) => (factoryID) => {
+      // factoryConfettiPerSecond = confettiPerSecond * owned
+      return state.factories[factoryID].confettiPerSecond * state.factories[factoryID].owned
+    },
   }
 })
